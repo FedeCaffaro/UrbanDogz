@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { ethers , BigNumber, utils} from "ethers";
-import NFTAbi from "../constants/NFTAbi.json";
+import { BigNumber} from "ethers";
 import { useWeb3React } from "@web3-react/core";
 import { Input, Button } from "@chakra-ui/react";
 import {getMaxSupply,getCurrentSupply,getPrice,getPreSalePrice,isSaleActive,isPreSaleActive,publicSale,preSale,verifyWhitelist, getMaxPerTxnPresale, getMaxPerTxn} from "./ContractFunction";
@@ -9,10 +8,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { buySuccessRender, buyErrorRender } from './ContractFunction';
 
 const Mint = () => {
-
-  const contractAddress = NFTAbi.address;
-  const contractABI = NFTAbi.abi;
-  
   const {
     active,
     chainId,
@@ -21,6 +16,8 @@ const Mint = () => {
   } = useWeb3React();
   
   const [mintAmount, setMintAmount] = useState(1);
+  const [whitelistMintAmount, setWhitelistMintAmount] = useState(1);
+
   const [totalMinted, setTotalMinted] = useState(0);
   const [maxSupply, setMaxSupply] = useState(0);
 
@@ -100,8 +97,8 @@ const Mint = () => {
   };
 
   const handleWhitelistMintIncrement = () => {
-    if (mintAmount >= maxPerTxnPreSale) return;
-    setMintAmount(mintAmount + 1);
+    if (whitelistMintAmount >= maxPerTxnPreSale) return;
+    setWhitelistMintAmount(whitelistMintAmount + 1);
   };
     
   const renderAndGetData =
@@ -149,7 +146,7 @@ const Mint = () => {
                   textAlign="center"
                   readOnly
                   type="number"
-                  value={mintAmount}
+                  value={whitelistMintAmount}
                   height="40px"
                   width="100px"
                   fontFamily="inherit"

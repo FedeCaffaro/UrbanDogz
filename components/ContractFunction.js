@@ -13,12 +13,6 @@ const whitelistAddresses = [
     "0x399Db9b924bC348BfC3bD777817631eb5A79b152",
   ];
 
-function getWhitelistCost(whitelistPrice, mintAmount) {
-    return utils.formatEther((whitelistPrice).mul(mintAmount));
-}
-function getPublicCost(publicPrice, mintAmount) {
-    return utils.formatEther((publicPrice).mul(mintAmount));
-}
 
 export const getMaxSupply = async() => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -77,7 +71,7 @@ export const getPrice = async() => {
       signer
     );
     const price = await contract.price();
-    return utils.formatEther(parseInt(price));
+    return utils.formatEther(parseInt(price)).toString();
 }
 
 export const getPreSalePrice = async() => {
@@ -89,7 +83,7 @@ export const getPreSalePrice = async() => {
       signer
     );
     const preSalePrice = await contract.preSalePrice();
-    return utils.formatEther(parseInt(preSalePrice));
+    return utils.formatEther(parseInt(preSalePrice)).toString();
 }
 
 export const isPreSaleActive = async() => {
@@ -127,8 +121,9 @@ export const publicSale = async(quantity) => {
       contractABI,
       signer
     );
+    
     const price = await getPrice();
-    const publicMintTxn = await contract.publicMint(quantity,{value:getPublicCost(price,quantity)});
+    const publicMintTxn = await contract.publicMint(quantity,{value:(ethers.utils.parseEther(await getPrice()))* quantity});
     return publicMintTxn;
 }
 
@@ -141,7 +136,8 @@ export const preSale = async(quantity) => {
       signer
     );
     const price = await getPreSalePrice();
-    const publicMintTxn = await contract.publicMint(quantity,{value:getWhitelistCost(price,quantity)});
+    const whitelistMintTxn = await contract.whitelistMint(quantity,{value:(ethers.utils.parseEther(await getPreSalePrice()))* quantity});
+    console.log(whitelistMintTxn)
     return publicMintTxn;
 }
 
@@ -176,5 +172,5 @@ export const buySuccessRender = ({ hash }) =>
 
 export const buyErrorRender = (error) => {
   const reason = error?.error?.message?.split(':');
-  return (reason?.length ? (reason[1] +reason[2]) : 'Try again later.').toUpperCase();
+  return (reason?.length ? (reason[1]) : 'Try again later.');
 };
