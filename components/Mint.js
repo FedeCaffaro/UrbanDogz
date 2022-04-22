@@ -122,7 +122,7 @@ const Mint = () => {
     <div className="flex flex-col justify-center text-center">
       {isWhitelisted? (
       <div>
-        <p> Whitelist price : {preSalePrice}ETH + GAS</p>
+        <p> Whitelist price : {preSalePrice} ETH + GAS</p>
         {active ? (
         <div>
           {process.env.NEXT_PUBLIC_MODE == chainId ? (
@@ -207,7 +207,7 @@ const Mint = () => {
       <br/>
       <br/>
       <div>
-      <p>Public price : {price}ETH + GAS</p>
+      <p>Public price : {price} ETH + GAS</p>
       {active ? (
         <div>
           {process.env.NEXT_PUBLIC_MODE == chainId ? (
@@ -285,6 +285,9 @@ const Mint = () => {
         </div>
       )}
       </div>
+      <br/>
+      <p> TOTAL MINTED: { totalMinted } / { maxSupply }</p>
+
     </div>
   );
 };
