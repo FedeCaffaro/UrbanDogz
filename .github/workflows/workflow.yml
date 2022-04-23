@@ -64,7 +64,6 @@ jobs:
           REACT_APP_PUBLIC_URL: ${{ secrets.AWS_S3_BUCKET_DEV}}
           AWS_REGION: 'us-east-1'
           SOURCE_DIR : 'out'
-#         SOURCE_DIR : 'build'
             
       # #Invalidate prod distribution 
       # - name: Invalidate Prod CloudFront
