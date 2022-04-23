@@ -116,183 +116,185 @@ const Mint = () => {
     return aFunction(result?.data);
   };
 
-  console.log(presaleIsActive);
 
   return (
     <div className="flex flex-col justify-center text-center">
-      {isWhitelisted? (
+      {saleActive? (
       <div>
-        <p> Whitelist price : {preSalePrice} ETH + GAS</p>
+        {isWhitelisted? (
+        <div>
+          <p> Whitelist price : {preSalePrice} ETH + GAS</p>
+          {active ? (
+          <div>
+            {process.env.NEXT_PUBLIC_MODE == chainId ? (
+              <div>
+                <div>
+                  <Button
+                    onClick={handleMintDecrement}
+                    borderRadius="5px"
+                    color="white"
+                    cursor="pointer"
+                    fontFamily="inherit"
+                    padding="10px"
+                    marginBottom="10px"
+                    backgroundColor="black"
+                    boxShadow="0px 2px 2px 1px #0F0F0F"
+                  >
+                    {" "}
+                    -{" "}
+                  </Button>
+                  <Input
+                    textAlign="center"
+                    readOnly
+                    type="number"
+                    value={whitelistMintAmount}
+                    height="40px"
+                    width="100px"
+                    fontFamily="inherit"
+                    paddingLeft="19px"
+                  />
+                  <Button
+                    onClick={handleWhitelistMintIncrement}
+                    borderRadius="5px"
+                    color="white"
+                    cursor="pointer"
+                    fontFamily="inherit"
+                    padding="10px"
+                    marginBottom="10px"
+                    backgroundColor="black"
+                    boxShadow="0px 2px 2px 1px #0F0F0F"
+                  >
+                    {" "}
+                    +{" "}
+                  </Button>
+                </div>
+                <Button
+                  onClick={handleWhitelistMint}
+                  borderRadius="5px"
+                  color="white"
+                  cursor="pointer"
+                  fontFamily="inherit"
+                  padding="10px"
+                  marginTop="10px"
+                  marginBottom="10px"
+                  backgroundColor="black"
+                  boxShadow="0px 2px 2px 1px #0F0F0F"
+                >
+                  {" "}
+                  WHITELIST MINT NOW!
+                </Button>
+              </div>
+            ) : (
+              <p className="font-bold">
+                {" "}
+                You must be connected to the ethereum mainnet. Check Metamask
+                network.{" "}
+              </p>
+            )}
+          </div>
+        ) : (
+          <div>
+            <p className="font-bold">
+              {" "}
+              You must be connected to MetaMask to mint.{" "}
+            </p>
+          </div>
+        )}
+        </div>
+        ):(
+          <p>You are not elegible for the whitelist. Try public minting instead.</p>
+        )
+        }
+        <br/>
+        <br/>
+        <div>
+        <p>Public price : {price} ETH + GAS</p>
         {active ? (
-        <div>
-          {process.env.NEXT_PUBLIC_MODE == chainId ? (
-            <div>
+          <div>
+            {process.env.NEXT_PUBLIC_MODE == chainId ? (
               <div>
+                <div>
+                  <Button
+                    onClick={handleMintDecrement}
+                    borderRadius="5px"
+                    color="white"
+                    cursor="pointer"
+                    fontFamily="inherit"
+                    padding="10px"
+                    marginBottom="10px"
+                    backgroundColor="black"
+                    boxShadow="0px 2px 2px 1px #0F0F0F"
+                  >
+                    {" "}
+                    -{" "}
+                  </Button>
+                  <Input
+                    textAlign="center"
+                    readOnly
+                    type="number"
+                    value={mintAmount}
+                    height="40px"
+                    width="100px"
+                    fontFamily="inherit"
+                    paddingLeft="19px"
+                  />
+                  <Button
+                    onClick={handleMintIncrement}
+                    borderRadius="5px"
+                    color="white"
+                    cursor="pointer"
+                    fontFamily="inherit"
+                    padding="10px"
+                    marginBottom="10px"
+                    backgroundColor="black"
+                    boxShadow="0px 2px 2px 1px #0F0F0F"
+                  >
+                    {" "}
+                    +{" "}
+                  </Button>
+                </div>
                 <Button
-                  onClick={handleMintDecrement}
+                  onClick={handlePublicMint}
                   borderRadius="5px"
                   color="white"
                   cursor="pointer"
                   fontFamily="inherit"
                   padding="10px"
+                  marginTop="10px"
                   marginBottom="10px"
                   backgroundColor="black"
                   boxShadow="0px 2px 2px 1px #0F0F0F"
                 >
                   {" "}
-                  -{" "}
-                </Button>
-                <Input
-                  textAlign="center"
-                  readOnly
-                  type="number"
-                  value={whitelistMintAmount}
-                  height="40px"
-                  width="100px"
-                  fontFamily="inherit"
-                  paddingLeft="19px"
-                />
-                <Button
-                  onClick={handleWhitelistMintIncrement}
-                  borderRadius="5px"
-                  color="white"
-                  cursor="pointer"
-                  fontFamily="inherit"
-                  padding="10px"
-                  marginBottom="10px"
-                  backgroundColor="black"
-                  boxShadow="0px 2px 2px 1px #0F0F0F"
-                >
-                  {" "}
-                  +{" "}
+                  PUBLIC MINT NOW!
                 </Button>
               </div>
-              <Button
-                onClick={handleWhitelistMint}
-                borderRadius="5px"
-                color="white"
-                cursor="pointer"
-                fontFamily="inherit"
-                padding="10px"
-                marginTop="10px"
-                marginBottom="10px"
-                backgroundColor="black"
-                boxShadow="0px 2px 2px 1px #0F0F0F"
-              >
+            ) : (
+              <p className="font-bold">
                 {" "}
-                WHITELIST MINT NOW!
-              </Button>
-            </div>
-          ) : (
+                You must be connected to the ethereum mainnet. Check Metamask
+                network.{" "}
+              </p>
+            )}
+          </div>
+        ) : (
+          <div>
             <p className="font-bold">
               {" "}
-              You must be connected to the ethereum mainnet. Check Metamask
-              network.{" "}
+              You must be connected to MetaMask to mint.{" "}
             </p>
-          )}
+          </div>
+        )}
         </div>
-      ) : (
-        <div>
-          <p className="font-bold">
-            {" "}
-            You must be connected to MetaMask to mint.{" "}
-          </p>
-        </div>
-      )}
-      </div>
-      ):(
-        <p>You are not elegible for the whitelist. Try public minting instead.</p>
-      )
-      }
-      <br/>
-      <br/>
-      <div>
-      <p>Public price : {price} ETH + GAS</p>
-      {active ? (
-        <div>
-          {process.env.NEXT_PUBLIC_MODE == chainId ? (
-            <div>
-              <div>
-                <Button
-                  onClick={handleMintDecrement}
-                  borderRadius="5px"
-                  color="white"
-                  cursor="pointer"
-                  fontFamily="inherit"
-                  padding="10px"
-                  marginBottom="10px"
-                  backgroundColor="black"
-                  boxShadow="0px 2px 2px 1px #0F0F0F"
-                >
-                  {" "}
-                  -{" "}
-                </Button>
-                <Input
-                  textAlign="center"
-                  readOnly
-                  type="number"
-                  value={mintAmount}
-                  height="40px"
-                  width="100px"
-                  fontFamily="inherit"
-                  paddingLeft="19px"
-                />
-                <Button
-                  onClick={handleMintIncrement}
-                  borderRadius="5px"
-                  color="white"
-                  cursor="pointer"
-                  fontFamily="inherit"
-                  padding="10px"
-                  marginBottom="10px"
-                  backgroundColor="black"
-                  boxShadow="0px 2px 2px 1px #0F0F0F"
-                >
-                  {" "}
-                  +{" "}
-                </Button>
-              </div>
-              <Button
-                onClick={handlePublicMint}
-                borderRadius="5px"
-                color="white"
-                cursor="pointer"
-                fontFamily="inherit"
-                padding="10px"
-                marginTop="10px"
-                marginBottom="10px"
-                backgroundColor="black"
-                boxShadow="0px 2px 2px 1px #0F0F0F"
-              >
-                {" "}
-                PUBLIC MINT NOW!
-              </Button>
-            </div>
-          ) : (
-            <p className="font-bold">
-              {" "}
-              You must be connected to the ethereum mainnet. Check Metamask
-              network.{" "}
-            </p>
-          )}
-        </div>
-      ) : (
-        <div>
-          <p className="font-bold">
-            {" "}
-            You must be connected to MetaMask to mint.{" "}
-          </p>
-        </div>
-      )}
-      </div>
-      <br/>
-      <p> TOTAL MINTED: { totalMinted } / { maxSupply }</p>
+        <br/>
+        <p> TOTAL MINTED: { totalMinted } / { maxSupply }</p>
 
+      </div>
+      ) :
+      (<p>Sale is not active yet! Come back later!</p>)
+      }
     </div>
   );
 };
 
 export default Mint;
-
-
-// agregar q tome el amx per transacion para ambos

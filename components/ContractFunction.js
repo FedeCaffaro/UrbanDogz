@@ -112,9 +112,8 @@ export const isPreSaleActive = async() => {
       contractABI,
       signer
     );
-    const saleActive = await contract.paused();
     const whitelistEnabled = await contract.onlyWhitelist();
-    return !saleActive && whitelistEnabled;
+    return whitelistEnabled;
 }
 
 export const isSaleActive = async() => {
@@ -125,9 +124,8 @@ export const isSaleActive = async() => {
       contractABI,
       signer
     );
-    const whitelistEnabled = await contract.onlyWhitelist();
     const saleActive = await contract.paused();
-    return !whitelistEnabled && saleActive;
+    return !saleActive;
 }
 
 
@@ -140,7 +138,6 @@ export const publicSale = async(quantity) => {
       signer
     );
     
-    const price = await getPrice();
     const publicMintTxn = await contract.publicMint(quantity,{value:(ethers.utils.parseEther(await getPrice()))* quantity});
     return publicMintTxn;
 }
