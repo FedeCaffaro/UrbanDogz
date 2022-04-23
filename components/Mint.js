@@ -48,6 +48,7 @@ const Mint = () => {
     verifyWhitelist(account).then(setIsWhitelisted); 
   }
 
+
   useEffect(() => {
     if (active) {
       handleStats();
@@ -202,7 +203,7 @@ const Mint = () => {
         )}
         </div>
         ):(
-          <p>You are not elegible for the whitelist. Try public minting instead.</p>
+          <p>You are not eligible for the whitelist. Try public minting instead.</p>
         )
         }
         <br/>
@@ -291,7 +292,7 @@ const Mint = () => {
 
       </div>
       ) :
-      (<p>Sale is not active yet! Come back later!</p>)
+      (<p>Sale is not active yet! Come back later please</p>)
       }
     </div>
   );
