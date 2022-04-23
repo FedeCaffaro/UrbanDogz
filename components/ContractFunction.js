@@ -89,7 +89,7 @@ export const getPrice = async() => {
       signer
     );
     const price = await contract.price();
-    return utils.formatEther(parseInt(price)).toString();
+    return utils.formatEther(parseInt(price).toString());
 }
 
 export const getPreSalePrice = async() => {
@@ -101,7 +101,7 @@ export const getPreSalePrice = async() => {
       signer
     );
     const preSalePrice = await contract.preSalePrice();
-    return utils.formatEther(parseInt(preSalePrice)).toString();
+    return utils.formatEther(parseInt(preSalePrice).toString());
 }
 
 export const isPreSaleActive = async() => {
