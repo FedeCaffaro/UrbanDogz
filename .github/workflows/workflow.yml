@@ -29,11 +29,11 @@ jobs:
 
       # Install project dependencies
       - name: Install Dependencies
-        run: npm install
+        run: yarn
 
       # Build the app
       - name: Build
-        run: npm run build
+        run: yarm build
 
       #Deploy to prod
       - name : Deploy Prod
@@ -47,7 +47,7 @@ jobs:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_PROD }}
           REACT_APP_PUBLIC_URL: ${{ secrets.AWS_S3_BUCKET_PROD}}
           AWS_REGION: 'us-east-1'
-          SOURCE_DIR : 'build'
+          SOURCE_DIR : 'out'
 
 
 
@@ -63,7 +63,7 @@ jobs:
           AWS_S3_BUCKET : ${{ secrets.AWS_S3_BUCKET_DEV }}
           REACT_APP_PUBLIC_URL: ${{ secrets.AWS_S3_BUCKET_DEV}}
           AWS_REGION: 'us-east-1'
-          SOURCE_DIR : 'build'
+          SOURCE_DIR : 'out'
             
       # #Invalidate prod distribution 
       # - name: Invalidate Prod CloudFront

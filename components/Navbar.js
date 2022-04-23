@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "./Wallet/connectors";
-
-import Image from "next/image";
 import { SlideIn } from "animations/SlideIn";
 
 function Navbar() {
@@ -52,7 +50,7 @@ function Navbar() {
                 <h1 className="text-xl font-bold cursor-pointer ">
                   UrbanDogz<span className="text-black"> Club</span>
                 </h1>
-                <Image src="/Logo.png" alt="Logo" width={64} height={64} />
+                <img src="/Logo.png" alt="Logo" width={64} height={64} />
               </div>
               <div className="hidden md:block">
                 <div className="flex items-baseline ml-10 space-x-4">
