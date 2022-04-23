@@ -33,7 +33,7 @@ jobs:
 
       # Build the app
       - name: Build
-        run: yarm build
+        run: yarn build
 
       #Deploy to prod
       - name : Deploy Prod
