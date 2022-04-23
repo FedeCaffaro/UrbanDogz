@@ -1,0 +1,29 @@
+.container {
+  position: absolute;
+  top: 3rem;
+  left: 3rem;
+  margin: 0;
+  padding: 0;
+  align-items: start;
+  font-family: "Pilot Command";
+  font-size: 4em;
+  line-height: 0.5em;
+  color: #f7f4af;
+
+  span {
+    @apply text-cSilver;
+    font-weight: 500;
+    font-size: 2rem;
+  }
+}
+
+.title {
+  font-weight: bold;
+  @apply text-cWhite;
+}
+
+@media (max-width: 800px) {
+  .container {
+    line-height: 0.95em;
+  }
+}

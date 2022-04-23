@@ -1,0 +1,89 @@
+name: UrbanDogz
+
+on:
+  push:
+    branches:
+      - development
+      - main
+
+jobs:
+  build:
+    name: deploy
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      # Checkout the repo
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      # Setup Node.js build environment
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.13.0
+
+
+      # Install project dependencies
+      - name: Install Dependencies
+        run: yarn
+
+      # Build the app
+      - name: Build
+        run: yarn build
+
+      #Deploy to prod
+      - name : Deploy Prod
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --follow-symlinks --delete --exclude '.git/*' --exclude '.github/*'
+        if: endsWith(github.ref, '/main')
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_PROD }}
+          REACT_APP_PUBLIC_URL: ${{ secrets.AWS_S3_BUCKET_PROD}}
+          AWS_REGION: 'us-east-1'
+          SOURCE_DIR : 'out'
+
+
+
+      #Deploy to dev
+      - name : Deploy Dev
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --follow-symlinks --delete --exclude '.git/*' --exclude '.github/*'
+        if: endsWith(github.ref, '/development')
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_S3_BUCKET : ${{ secrets.AWS_S3_BUCKET_DEV }}
+          REACT_APP_PUBLIC_URL: ${{ secrets.AWS_S3_BUCKET_DEV}}
+          AWS_REGION: 'us-east-1'
+          SOURCE_DIR : 'out'
+            
+      # #Invalidate prod distribution 
+      # - name: Invalidate Prod CloudFront
+      #   uses: chetan/invalidate-cloudfront-action@v2
+      #   if: endsWith(github.ref, '/main')
+      #   env:
+      #     DISTRIBUTION: ${{ secrets.DISTRIBUTION_PROD }}
+      #     PATHS: "/*"
+      #     AWS_REGION: "us-east-1"
+      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+           
+      # #Invalidate dev distribution 
+      # - name: Invalidate Dev CloudFront
+      #   uses: chetan/invalidate-cloudfront-action@v2
+      #   if: endsWith(github.ref, '/development')
+      #   env:
+      #     DISTRIBUTION: ${{ secrets.DISTRIBUTION_DEV }}
+      #     PATHS: "/**/*"
+      #     AWS_REGION: "us-east-1"
+      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      
