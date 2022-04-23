@@ -3,6 +3,7 @@ import { ethers , utils,BigNumber} from "ethers";
 import NFTAbi from "../constants/NFTAbi.json";
 import { MerkleTree } from 'merkletreejs';
 import keccak256 from 'keccak256';
+import { parseEther } from '@ethersproject/units';
 
 const ETHERSCAN_URL = 'https://rinkeby.etherscan.io';
 const contractAddress = NFTAbi.address;
@@ -137,12 +138,14 @@ export const publicSale = async(quantity) => {
       contractABI,
       signer
     );
-    
-    const publicMintTxn = await contract.publicMint(quantity,{value:(ethers.utils.parseEther(await getPrice()))* quantity});
+    const price = await getPrice();
+    const total = (price * quantity).toString();
+    const parsedTotal = ethers.utils.parseEther(total)
+    const publicMintTxn = await contract.publicMint(quantity,{value: parsedTotal});
     return publicMintTxn;
 }
 
-export const preSale = async(quantity) => {
+export const preSale = async(quantity, account) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const contract = new ethers.Contract(
@@ -151,9 +154,18 @@ export const preSale = async(quantity) => {
       signer
     );
     const price = await getPreSalePrice();
-    const whitelistMintTxn = await contract.whitelistMint(quantity,{value:(ethers.utils.parseEther(await getPreSalePrice()))* quantity});
-    console.log(whitelistMintTxn)
-    return publicMintTxn;
+    const total = (price * quantity).toString();
+    const parsedTotal = ethers.utils.parseEther(total)
+    const merkleProof = getProof(account);
+    const whitelistMintTxn = await contract.whitelistMint(quantity,merkleProof,{value: parsedTotal });
+    return whitelistMintTxn;
+}
+
+const getProof = (account) => {
+  const leafNodes = whitelistAddresses.map(addr => keccak256(addr));
+  const merkleTree = new MerkleTree(leafNodes, keccak256, { sortPairs: true });
+  const merkleProof = merkleTree.getHexProof(keccak256(account));
+  return merkleProof;
 }
 
 export const verifyWhitelist = async(account)=>{

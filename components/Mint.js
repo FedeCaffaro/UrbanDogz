@@ -59,7 +59,7 @@ const Mint = () => {
   async function handleWhitelistMint() {
     if (active) {
       try {
-        toast.promise(preSale(BigNumber.from(mintAmount)), {
+        toast.promise(preSale(BigNumber.from(whitelistMintAmount),account), {
           pending: 'Buying...',
           success: {render: renderAndGetData(buySuccessRender)},
           error: {render: renderAndGetError(buyErrorRender)},
