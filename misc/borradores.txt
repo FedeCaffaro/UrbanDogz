@@ -1,0 +1,71 @@
+
+
+// function Mint() {
+// 	return (
+// 		<div>
+
+// 				<div className="flex flex-col items-center justify-center pt-40 space-y-2 text-xl font-bold text-center lg:text-4xl">
+// 					<div className="pb-10 text-gray-900 ">
+// 						Si quiere compra con <span className="text-blue-500">DIOS...</span>
+// 					</div>
+					
+// 					<div >
+// 						<Image src="/NFTs/1.jpeg" height={300} width={250} alt="NFT1"/>
+// 						<div className="flex items-center justify-center w-64 h-16 text-3xl font-semibold text-white bg-gray-900 rounded-lg cursor-pointer hover:shadow-lg">
+// 						<h1 className="text-center">Mintea NFT 💎 </h1>
+// 						</div>
+						
+// 					</div>
+// 					<div>
+// 						<Image src="/NFTs/2.jpeg" height={300} width={250} alt="NFT2"/>
+// 						<div className="flex items-center justify-center w-64 h-16 text-3xl font-semibold text-white bg-gray-900 rounded-lg cursor-pointer hover:shadow-lg">
+// 						<h1 className="text-center">Mintea NFT 💎 </h1>
+// 						</div>
+// 					</div>
+
+// 				</div>
+// 		</div>
+// 	);
+// }
+
+
+
+<div className="flex flex-col items-center justify-center text-center">
+<CardGroup>
+  <Card>
+    <Card.Body>
+    <div className="pt-40 pb-2 text-xl font-bold text-gray-900 lg:text-4xl">
+      <Card.Title> NFT 1</Card.Title>
+    </div>
+        <div className="logo-wrapper">
+			<Image src="/../public/NFTs/1.jpeg" width={200} height={200} alt="nft1" />
+	    </div>    
+      <Card.Text>
+        This is the first NFT of the collection.
+      </Card.Text>
+    </Card.Body>
+    <Card.Footer>
+      <small className="text-muted">Engineered by Samot Club</small>
+      <Mint />
+    </Card.Footer>
+  </Card>
+  <Card>
+    <Card.Body>
+    <div className="pt-10 pb-2 text-xl font-bold text-gray-900 lg:text-4xl">
+      <Card.Title> NFT 2</Card.Title>
+    </div>
+        <div className="logo-wrapper">
+			<Image src="/../public/NFTs/2.jpeg" width={200} height={200} alt="nft2" />
+	    </div>    
+      <Card.Text>
+        This is the second NFT of the collection.
+      </Card.Text>
+    </Card.Body>
+    <Card.Footer>
+      <small className="text-muted">Engineered by Samot Club</small>
+      <Mint />
+    </Card.Footer>
+  </Card>
+</CardGroup>
+
+</div>
