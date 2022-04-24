@@ -5,7 +5,7 @@ import { MerkleTree } from 'merkletreejs';
 import keccak256 from 'keccak256';
 import { parseEther } from '@ethersproject/units';
 
-const ETHERSCAN_URL = 'https://rinkeby.etherscan.io';
+const ETHERSCAN_URL = 'https://etherscan.io';
 const contractAddress = NFTAbi.address;
 const contractABI = NFTAbi.abi;
 
