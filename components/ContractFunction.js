@@ -3,8 +3,9 @@ import { ethers , utils,BigNumber} from "ethers";
 import NFTAbi from "../constants/NFTAbi.json";
 import { MerkleTree } from 'merkletreejs';
 import keccak256 from 'keccak256';
+import { parseEther } from '@ethersproject/units';
 
-const ETHERSCAN_URL = 'https://rinkeby.etherscan.io';
+const ETHERSCAN_URL = 'https://etherscan.io';
 const contractAddress = NFTAbi.address;
 const contractABI = NFTAbi.abi;
 
@@ -89,7 +90,7 @@ export const getPrice = async() => {
       signer
     );
     const price = await contract.price();
-    return utils.formatEther(parseInt(price)).toString();
+    return utils.formatEther(parseInt(price).toString());
 }
 
 export const getPreSalePrice = async() => {
@@ -101,7 +102,7 @@ export const getPreSalePrice = async() => {
       signer
     );
     const preSalePrice = await contract.preSalePrice();
-    return utils.formatEther(parseInt(preSalePrice)).toString();
+    return utils.formatEther(parseInt(preSalePrice).toString());
 }
 
 export const isPreSaleActive = async() => {
@@ -112,9 +113,8 @@ export const isPreSaleActive = async() => {
       contractABI,
       signer
     );
-    const saleActive = await contract.paused();
     const whitelistEnabled = await contract.onlyWhitelist();
-    return !saleActive && whitelistEnabled;
+    return whitelistEnabled;
 }
 
 export const isSaleActive = async() => {
@@ -125,9 +125,8 @@ export const isSaleActive = async() => {
       contractABI,
       signer
     );
-    const whitelistEnabled = await contract.onlyWhitelist();
     const saleActive = await contract.paused();
-    return !whitelistEnabled && saleActive;
+    return !saleActive;
 }
 
 
@@ -139,13 +138,14 @@ export const publicSale = async(quantity) => {
       contractABI,
       signer
     );
-    
     const price = await getPrice();
-    const publicMintTxn = await contract.publicMint(quantity,{value:(ethers.utils.parseEther(await getPrice()))* quantity});
+    const total = (price * quantity).toString();
+    const parsedTotal = ethers.utils.parseEther(total)
+    const publicMintTxn = await contract.publicMint(quantity,{value: parsedTotal});
     return publicMintTxn;
 }
 
-export const preSale = async(quantity) => {
+export const preSale = async(quantity, account) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const contract = new ethers.Contract(
@@ -154,9 +154,18 @@ export const preSale = async(quantity) => {
       signer
     );
     const price = await getPreSalePrice();
-    const whitelistMintTxn = await contract.whitelistMint(quantity,{value:(ethers.utils.parseEther(await getPreSalePrice()))* quantity});
-    console.log(whitelistMintTxn)
-    return publicMintTxn;
+    const total = (price * quantity).toString();
+    const parsedTotal = ethers.utils.parseEther(total)
+    const merkleProof = getProof(account);
+    const whitelistMintTxn = await contract.whitelistMint(quantity,merkleProof,{value: parsedTotal });
+    return whitelistMintTxn;
+}
+
+const getProof = (account) => {
+  const leafNodes = whitelistAddresses.map(addr => keccak256(addr));
+  const merkleTree = new MerkleTree(leafNodes, keccak256, { sortPairs: true });
+  const merkleProof = merkleTree.getHexProof(keccak256(account));
+  return merkleProof;
 }
 
 export const verifyWhitelist = async(account)=>{

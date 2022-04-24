@@ -55,7 +55,7 @@ function Navbar() {
               <div className="hidden md:block">
                 <div className="flex items-baseline ml-10 space-x-4">
                   <a
-                    href="https://samot.club"
+                    href="https://urbandogz.club"
                     target="_blank"
                     rel="noopener noreferrer"
                     
@@ -66,7 +66,7 @@ function Navbar() {
                     Web
                   </a>
                   <a
-                    href="https://samot.chat"
+                    href="https://discord.gg/urbandogz"
                     target="_blank"
                     rel="noopener noreferrer"
                     smooth={true}
@@ -77,7 +77,7 @@ function Navbar() {
                     Discord
                   </a>
                   <a
-                    href="https://samot.club"
+                    href="https://opensea.io/collection/urbandogz"
                     target="_blank"
                     rel="noopener noreferrer"
                     activeClass="work"
@@ -91,7 +91,7 @@ function Navbar() {
                   </a>
 
                   <a
-                    href="https://twitter.com/samotclub"
+                    href="https://twitter.com/urbandogzclub"
                     activeClass="Services"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -173,7 +173,7 @@ function Navbar() {
             <ul>
               <li>
                 <a
-                  href="https://samot.club"
+                  href="https://urbandogz.club"
                   target="_blank"
                   rel="noopener noreferrer"
                   activeClass="website"
@@ -188,7 +188,7 @@ function Navbar() {
               </li>
               <li>
                 <a
-                  href="https://samot.chat"
+                  href="https://discord.gg/urbandogz"
                   target="_blank"
                   rel="noopener noreferrer"
                   activeClass="about"
@@ -203,7 +203,7 @@ function Navbar() {
               </li>
               <li>
                 <a
-                  href="https://samot.club"
+                  href="https://opensea.io/collection/urbandogz"
                   target="_blank"
                   rel="noopener noreferrer"
                   activeClass="work"
@@ -218,7 +218,7 @@ function Navbar() {
               </li>
               <li>
                 <a
-                  href="https://twitter.com/samotclub"
+                  href="https://twitter.com/urbandogzclub"
                   target="_blank"
                   rel="noopener noreferrer"
                   activeClass="services"

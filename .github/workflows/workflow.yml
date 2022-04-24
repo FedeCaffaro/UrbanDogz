@@ -65,25 +65,25 @@ jobs:
           AWS_REGION: 'us-east-1'
           SOURCE_DIR : 'out'
             
-      # #Invalidate prod distribution 
-      # - name: Invalidate Prod CloudFront
-      #   uses: chetan/invalidate-cloudfront-action@v2
-      #   if: endsWith(github.ref, '/main')
-      #   env:
-      #     DISTRIBUTION: ${{ secrets.DISTRIBUTION_PROD }}
-      #     PATHS: "/*"
-      #     AWS_REGION: "us-east-1"
-      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #Invalidate prod distribution 
+      - name: Invalidate Prod CloudFront
+        uses: chetan/invalidate-cloudfront-action@v2
+        if: endsWith(github.ref, '/main')
+        env:
+          DISTRIBUTION: ${{ secrets.DISTRIBUTION_PROD }}
+          PATHS: "/*"
+          AWS_REGION: "us-east-1"
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
            
-      # #Invalidate dev distribution 
-      # - name: Invalidate Dev CloudFront
-      #   uses: chetan/invalidate-cloudfront-action@v2
-      #   if: endsWith(github.ref, '/development')
-      #   env:
-      #     DISTRIBUTION: ${{ secrets.DISTRIBUTION_DEV }}
-      #     PATHS: "/**/*"
-      #     AWS_REGION: "us-east-1"
-      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #Invalidate dev distribution 
+      - name: Invalidate Dev CloudFront
+        uses: chetan/invalidate-cloudfront-action@v2
+        if: endsWith(github.ref, '/development')
+        env:
+          DISTRIBUTION: ${{ secrets.DISTRIBUTION_DEV }}
+          PATHS: "/*"
+          AWS_REGION: "us-east-1"
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       
